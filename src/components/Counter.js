@@ -32,6 +32,8 @@ STEP 3:
   Start by replacing the character "0" with {count}. The 'count' slice of state is the source of truth here.
   Then, replace the word "even" with a ternary: {if count is even number, then string "even", else string "odd"}.
 
+
+  //Number {count} is {if count % 2 === 0, 'even' : 'odd'}
 STEP 4:
   This click handler needs to use 'setCount' to schedule the 'count' to become the current 'count' plus one.
   These state changes are not synchronous: the updated count arrives on the next run of the Counter component.
@@ -46,32 +48,36 @@ STEP 6:
   This click handler needs to use 'setCount' to set the 'count' to be zero again.
 */
 
-import React from 'react'; /* STEP 0 */
+import React, {useState} from 'react'; /* STEP 0 */
 
 export default function Counter() {
   /* STEP 1 */
-
+const [count, setCount] = useState(0)
   const increment = () => {
-    /* STEP 4 */
+    setCount(count + 1)
+    return;
   };
   const decrement = () => {
-    /* STEP 5 */
+    setCount(count - 1)
+    return;
   };
   const reset = () => {
-    /* STEP 6 */
+    setCount(0)
+    return;
   };
 
   const style = {
-    fontSize: '1.5em',
+    fontSize: '1.3em',
     marginBottom: '0.3em',
-    color: 'royalblue', /* STEP 2 */
-  };
+    color: (count % 2 === 0) ? 'royalblue' : 'crimson',
+
+  }
 
   return (
     <div className='widget-counter container'>
       <h2>Counter</h2>
       <div id='count' style={style}>
-        Number 0 is even {/* STEP 3 */}
+      Number {count} is {(count % 2 === 0) ? 'is even': 'is odd'}
       </div>
       <div>
         <button id='increment' onClick={increment}>Increment</button>
@@ -80,4 +86,5 @@ export default function Counter() {
       </div>
     </div>
   );
-}
+
+  }
